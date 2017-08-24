@@ -1,0 +1,39 @@
+---
+- hosts: webservers
+  become: true
+  tasks:
+  - name: ensure repository key is installed
+    apt_key:
+      id: "58118E89F3A912897C070ADBF76221572C52609D"
+      keyserver: "hkp://p80.pool.sks-keyservers.net:80"
+      state: present
+
+  - name: ensure docker registry is available
+    apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-xenial main' state=present
+
+  - name: ensure docker and dependencies are installed
+    apt: name=docker-engine update_cache=yes
+
+
+  - name: add user mod
+    command:  usermod -aG docker ubuntu
+
+  - service: name=docker state=restarted
+  - copy:
+      src: ./Dockerfile
+      dest: .
+
+  - name: Install requirements
+    command: pip install docker-py
+
+  - name: create folder
+    file:
+      path: jenkins
+      state: directory
+
+  - name: Build an image
+    docker_image: 
+      path: /home/ubuntu
+      name: jenkins_docker
+  - name: run jenkins_docker container
+    command: docker run  -d -p 8080:8080 -p 50000:50000 -v $HOME/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker jenkins_docker
