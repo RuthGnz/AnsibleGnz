@@ -34,6 +34,7 @@
   - name: Build an image
     docker_image: 
       path: /home/ubuntu
-      name: jenkins_docker
+      name: jenkins_docker 
+      force: yes
   - name: run jenkins_docker container
     command: docker run  -d -p 8080:8080 -p 50000:50000 -v $HOME/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker jenkins_docker
