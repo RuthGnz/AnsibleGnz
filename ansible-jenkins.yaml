@@ -22,6 +22,11 @@
   - name: add user mod
     command:  usermod -aG docker ubuntu
 
+  - name: create folder
+    file:
+      path: DockerFile
+      state: directory
+      
   - service: name=docker state=restarted
   - copy:
       src: ./Dockerfile
