@@ -12,8 +12,10 @@
     apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-xenial main' state=present
 
   - name: ensure docker and dependencies are installed
-    apt: name=docker-engine update_cache=yes
+    command: sudo apt-get update
 
+  - name: ensure docker and dependencies are installed
+    command: sudo apt-get install docker-engine
 
   - name: add user mod
     command:  usermod -aG docker ubuntu
