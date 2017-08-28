@@ -37,7 +37,7 @@
 
   - name: Build an image
     docker_image: 
-      path: /home/ubuntu/DockerFile
+      path: ./DockerFile
       name: jenkins_docker 
       force: yes
   - name: run jenkins_docker container
