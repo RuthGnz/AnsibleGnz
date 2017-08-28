@@ -25,7 +25,7 @@
   - service: name=docker state=restarted
   - copy:
       src: ./Dockerfile
-      dest: ./DockerFile
+      dest: ./DockerFile/
 
   - name: Install requirements
     command: pip install docker-py
@@ -37,7 +37,7 @@
 
   - name: Build an image
     docker_image: 
-      path: ./DockerFile
+      path: ./DockerFile/
       name: jenkins_docker 
       force: yes
   - name: run jenkins_docker container
