@@ -17,7 +17,7 @@
 
   - name: install docker
     become: true
-    apt: name='docker-engine'
+    apt: name='docker-engine' force='yes' update_cache='yes'
 
   - name: add user mod
     command:  usermod -aG docker ubuntu
