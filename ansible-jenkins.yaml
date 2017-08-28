@@ -11,14 +11,15 @@
   - name: ensure docker registry is available
     apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-xenial main' state=present
 
-  - name: update cache
-    become: true
-    command: apt-get update
 
   - name: install docker
     become: true
-    apt: name='docker-engine' force='yes' update_cache='yes'
+    apt: name='docker-engine' force='yes' 
 
+  - name: update cache
+    become: true
+    command: apt-get update
+    
   - name: add user mod
     command:  usermod -aG docker ubuntu
 
